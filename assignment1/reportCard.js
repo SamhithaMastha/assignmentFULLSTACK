@@ -17,14 +17,6 @@ class Student {
 
     getLetterGrade() {
         let average = this.getAverage();
-
-        // Grade Scale:
-        // A = 90+
-        // B = 80+
-        // C = 70+
-        // D = 60+
-        // F = below 60
-
         if (average >= 90) {
             return "A";
         } else if (average >= 80) {
@@ -81,7 +73,6 @@ const summary = student.summary();
 // PASS / FAIL using ternary
 const status = average >= 60 ? "PASS" : "FAIL";
 
-// Switch based remark
 function getRemark(grade) {
     switch (grade) {
         case "A":

@@ -1,3 +1,4 @@
+const fs = require("fs");
 class Student {
     constructor(name, scores) {
         this.name = name;
@@ -127,3 +128,39 @@ Highest Score: ${summary.highest}
 Lowest Score: ${summary.lowest}
 =================================
 `);
+// BONUS: Multi-student mode
+const data = fs.readFileSync("students.json", "utf8");
+const studentsData = JSON.parse(data);
+
+let topStudent = "";
+let highestAverage = 0;
+
+console.log("\n====== MULTI STUDENT REPORT ======\n");
+
+for (let i = 0; i < studentsData.length; i++) {
+    const currentStudent = new Student(
+        studentsData[i].name,
+        studentsData[i].scores
+    );
+
+    const avg = currentStudent.getAverage();
+    const grade = currentStudent.getLetterGrade();
+    const details = currentStudent.summary();
+
+    console.log(`
+Student Name: ${currentStudent.name}
+Scores: ${currentStudent.scores.join(", ")}
+Average: ${avg.toFixed(1)}
+Grade: ${grade}
+Highest: ${details.highest}
+Lowest: ${details.lowest}
+--------------------------
+`);
+
+    if (avg > highestAverage) {
+        highestAverage = avg;
+        topStudent = currentStudent.name;
+    }
+}
+
+console.log(`Top Performer: ${topStudent}`);
